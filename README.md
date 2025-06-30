@@ -277,4 +277,4 @@ NOMED TECH - [info@nomedtech.com](mailto:info@nomedtech.com)
 
 ---
 
-Desarrollado con ❤️ por el equipo de NOMED TECH
+
