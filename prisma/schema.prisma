@@ -1,0 +1,187 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String?
+  company       String?
+  role          Role      @default(USER)
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relaciones
+  accounts      Account[]
+  sessions      Session[]
+  contacts      Contact[]
+  reservations  Reservation[]
+  caseStudies   CaseStudy[]
+
+  @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
+
+model Contact {
+  id      String   @id @default(cuid())
+  name    String
+  email   String
+  company String
+  message String
+  service String?
+  status  ContactStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@map("contacts")
+}
+
+model Reservation {
+  id      String   @id @default(cuid())
+  name    String
+  email   String
+  company String
+  date    DateTime
+  time    String
+  service String
+  message String?
+  status  ReservationStatus @default(PENDING)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relaciones
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@map("reservations")
+}
+
+model CaseStudy {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  company     String
+  industry    String
+  results     String
+  image       String?
+  published   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relaciones
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@map("case_studies")
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float?
+  features    String[]
+  category    ServiceCategory
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("services")
+}
+
+model PricingPlan {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Float
+  interval    String   // monthly, yearly
+  features    String[]
+  popular     Boolean  @default(false)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("pricing_plans")
+}
+
+// Enums
+enum Role {
+  ADMIN
+  USER
+  GUEST
+}
+
+enum ContactStatus {
+  PENDING
+  CONTACTED
+  CONVERTED
+  REJECTED
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum ServiceCategory {
+  AI_CHATBOTS
+  AUTOMATION
+  MARKETING
+  ANALYTICS
+  CUSTOM
+} 
