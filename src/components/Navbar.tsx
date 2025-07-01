@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,7 +20,7 @@ export default function Navbar() {
       isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'
     }`}>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="/" className={`flex items-center space-x-3 transition-all duration-700 delay-200 ${
+        <Link href="/" className={`flex items-center space-x-3 transition-all duration-700 delay-200 ${
           isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4'
         }`}>
           <Image 
@@ -30,7 +31,7 @@ export default function Navbar() {
             className="h-8 md:h-10"
           />
           <span className="text-xl font-light text-white">NOMED TECH</span>
-        </a>
+        </Link>
         
         {/* Desktop Navigation */}
         <nav className={`hidden md:flex items-center space-x-8 transition-all duration-700 delay-400 ${

@@ -1,7 +1,8 @@
 'use client';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useChat } from '../hooks/useChat';
 import { ChatMessage } from '../types';
+import Image from 'next/image';
 
 export default function ChatWidget() {
   const { messages, input, setInput, waiting, chatBodyRef, handleSend } = useChat();
@@ -50,7 +51,7 @@ export default function ChatWidget() {
         {/* Header */}
         <div className="bg-gray-800 p-4 flex justify-between items-center border-b border-gray-700">
           <div className="flex items-center space-x-3">
-            <img src="/assets/logo.png" alt="NOMED TECH" className="h-6 w-6" />
+            <Image src="/assets/logo.png" alt="NOMED TECH" width={24} height={24} className="h-6 w-6" />
             <h3 className="font-semibold text-cyan-400">NOMED TECH AI Assistant</h3>
           </div>
           <button 

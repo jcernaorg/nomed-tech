@@ -54,18 +54,18 @@ export const api = {
   },
 
   // Servicios
-  async getServices(): Promise<ApiResponse<any[]>> {
-    return fetchApi<any[]>('/services');
+  async getServices(): Promise<ApiResponse<unknown[]>> {
+    return fetchApi<unknown[]>('/services');
   },
 
   // Casos de éxito
-  async getCaseStudies(): Promise<ApiResponse<any[]>> {
-    return fetchApi<any[]>('/case-studies');
+  async getCaseStudies(): Promise<ApiResponse<unknown[]>> {
+    return fetchApi<unknown[]>('/case-studies');
   },
 
   // Precios
-  async getPricing(): Promise<ApiResponse<any[]>> {
-    return fetchApi<any[]>('/pricing');
+  async getPricing(): Promise<ApiResponse<unknown[]>> {
+    return fetchApi<unknown[]>('/pricing');
   },
 
   // Chat

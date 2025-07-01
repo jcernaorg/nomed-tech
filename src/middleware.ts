@@ -5,9 +5,6 @@ export function middleware(request: NextRequest) {
   // Obtener la ruta actual
   const path = request.nextUrl.pathname;
 
-  // Rutas públicas que no requieren autenticación
-  const publicRoutes = ['/', '/ai-chatbots', '/soluciones-listas', '/soluciones-a-medida', '/soluciones-marketing', '/precios', '/casos-de-exito', '/contacto'];
-  
   // Rutas que requieren autenticación
   const protectedRoutes = ['/dashboard', '/admin', '/reservas'];
   

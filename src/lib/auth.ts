@@ -1,7 +1,22 @@
 import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
-import { JWT } from 'next-auth/jwt';
+import { User } from '../types';
+
+// Extender el tipo de sesión de NextAuth
+
+declare module 'next-auth' {
+  interface Session {
+    user: {
+      id: string;
+      role?: string;
+      company?: string;
+      name?: string | null;
+      email?: string | null;
+      image?: string | null;
+    };
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -19,8 +34,6 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
-
-        // Aquí puedes integrar con tu API externa para autenticación
         try {
           const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
             method: 'POST',
@@ -32,9 +45,7 @@ export const authOptions: NextAuthOptions = {
               password: credentials.password,
             }),
           });
-
           const user = await response.json();
-
           if (response.ok && user) {
             return user;
           }
@@ -53,13 +64,13 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = user.role;
-        token.company = user.company;
+        token.role = (user as User).role;
+        token.company = (user as User).company;
       }
       return token;
     },
     async session({ session, token }) {
-      if (token) {
+      if (token && session.user) {
         session.user.id = token.id as string;
         session.user.role = token.role as string;
         session.user.company = token.company as string;
@@ -69,7 +80,6 @@ export const authOptions: NextAuthOptions = {
   },
   pages: {
     signIn: '/login',
-    signUp: '/register',
     error: '/auth/error',
   },
   secret: process.env.NEXTAUTH_SECRET,

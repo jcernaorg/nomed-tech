@@ -1,8 +1,7 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default function AIChatbots() {
-  const [activeTab, setActiveTab] = useState('caracteristicas');
 
   // Efecto para animaciones de scroll
   useEffect(() => {

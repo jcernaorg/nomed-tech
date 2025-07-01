@@ -96,7 +96,7 @@ export const useAnimations = () => {
   // Animación de pulso en el bubble del chat
   const animateChatBubble = (isOpen: boolean) => {
     const bubble = document.getElementById('chat-bubble');
-    if (!chatOpen) {
+    if (!isOpen) {
       bubble?.classList.add('chat-bubble-blink');
     } else {
       bubble?.classList.remove('chat-bubble-blink');

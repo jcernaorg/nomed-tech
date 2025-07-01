@@ -5,9 +5,9 @@ import Navbar from '../Navbar';
 // Mock Next.js Image component
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: (props: any) => {
+  default: (props: { src: string; alt: string; width: number; height: number; className?: string }) => {
     // eslint-disable-next-line @next/next/no-img-element
-    return <img {...props} />
+    return <img {...props} alt={props.alt} />
   },
 }));
 

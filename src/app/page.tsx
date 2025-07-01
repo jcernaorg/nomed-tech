@@ -1,6 +1,6 @@
 'use client';
-import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 type ChatMessage = {
   type: 'bot' | 'user';
@@ -36,9 +36,7 @@ export default function Home() {
 
   // Estados para funcionalidades interactivas
   const [serviceType, setServiceType] = useState<'all' | 'automation' | 'analytics' | 'chatbots'>('all');
-  const [themeMode, setThemeMode] = useState<'dark' | 'light'>('dark');
   const [showStats, setShowStats] = useState(false);
-  const [activeFeature, setActiveFeature] = useState<string | null>(null);
   const [counterValues, setCounterValues] = useState({
     clients: 0,
     projects: 0,
@@ -301,7 +299,6 @@ export default function Home() {
 
   // Función para animar barras de progreso
   function animateBar(ref: React.RefObject<HTMLDivElement | null>, target: number, setter: (v: number) => void) {
-    let start = 0;
     const duration = 1200;
     const step = (timestamp: number, startTime: number | null) => {
       if (!startTime) startTime = timestamp;
@@ -319,7 +316,6 @@ export default function Home() {
 
   // Función para animar contadores
   function animateCounter(target: number, setter: (value: number) => void, duration: number = 2000) {
-    let start = 0;
     const step = (timestamp: number, startTime: number | null) => {
       if (!startTime) startTime = timestamp;
       const progress = Math.min((timestamp - startTime) / duration, 1);
@@ -355,11 +351,7 @@ export default function Home() {
     });
   };
 
-  // Función para toggle del tema
-  const toggleTheme = () => {
-    setThemeMode(prev => prev === 'dark' ? 'light' : 'dark');
-    document.body.classList.toggle('light-theme');
-  };
+
 
   // Efecto para las barras de progreso
   useEffect(() => {
@@ -497,9 +489,7 @@ export default function Home() {
 
   // Aquí irán más efectos y lógica de animaciones (chatbot, counters, etc.)
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [mobileDropdownOpen, setMobileDropdownOpen] = useState(false);
+
 
   return (
     <>
@@ -595,8 +585,7 @@ export default function Home() {
             <div className={`service-card fade-in-section animate-fade-in-up delay-300 active ${
               serviceType === 'all' || serviceType === 'chatbots' ? 'opacity-100 scale-100' : 'opacity-50 scale-95'
             } transition-all duration-500`} data-service-type="chatbots">
-              <div className="glass-card p-8 rounded-2xl h-full relative card-animate hover:scale-105 cursor-pointer"
-                   onClick={() => setActiveFeature('chatbots')}>
+              <div className="glass-card p-8 rounded-2xl h-full relative card-animate hover:scale-105 cursor-pointer">
                 <div className="text-cyan-400 mb-6 animate-fade-in delay-400 icon-animate">
                   <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -620,8 +609,7 @@ export default function Home() {
             <div className={`service-card fade-in-section animate-fade-in-up delay-400 active ${
               serviceType === 'all' || serviceType === 'automation' ? 'opacity-100 scale-100' : 'opacity-50 scale-95'
             } transition-all duration-500`} data-service-type="automation">
-              <div className="glass-card p-8 rounded-2xl h-full relative card-animate hover:scale-105 cursor-pointer"
-                   onClick={() => setActiveFeature('automation')}>
+              <div className="glass-card p-8 rounded-2xl h-full relative card-animate hover:scale-105 cursor-pointer">
                 <div className="text-cyan-400 mb-6 animate-fade-in delay-500 icon-animate">
                   <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -645,8 +633,7 @@ export default function Home() {
             <div className={`service-card fade-in-section animate-fade-in-up delay-500 active ${
               serviceType === 'all' || serviceType === 'analytics' ? 'opacity-100 scale-100' : 'opacity-50 scale-95'
             } transition-all duration-500`} data-service-type="analytics">
-              <div className="glass-card p-8 rounded-2xl h-full relative card-animate hover:scale-105 cursor-pointer"
-                   onClick={() => setActiveFeature('analytics')}>
+              <div className="glass-card p-8 rounded-2xl h-full relative card-animate hover:scale-105 cursor-pointer">
                 <div className="text-cyan-400 mb-6 animate-fade-in delay-600 icon-animate">
                   <svg className="w-16 h-16 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10" />
@@ -1040,22 +1027,22 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center items-center gap-8 max-w-4xl mx-auto fade-in-section animate-fade-in-up delay-300">
             <div className="integration-icon w-16 h-16 bg-gray-800 rounded-2xl p-2 flex items-center justify-center">
-              <img src="https://cdn.simpleicons.org/whatsapp/22d3ee" alt="WhatsApp" className="w-full h-full object-contain" />
+              <Image src="https://cdn.simpleicons.org/whatsapp/22d3ee" alt="WhatsApp" width={48} height={48} className="w-full h-full object-contain" />
             </div>
             <div className="integration-icon w-16 h-16 bg-gray-800 rounded-2xl p-2 flex items-center justify-center">
-              <img src="https://cdn.simpleicons.org/facebook/22d3ee" alt="Facebook" className="w-full h-full object-contain" />
+              <Image src="https://cdn.simpleicons.org/facebook/22d3ee" alt="Facebook" width={48} height={48} className="w-full h-full object-contain" />
             </div>
             <div className="integration-icon w-16 h-16 bg-gray-800 rounded-2xl p-2 flex items-center justify-center">
-              <img src="https://cdn.simpleicons.org/instagram/22d3ee" alt="Instagram" className="w-full h-full object-contain" />
+              <Image src="https://cdn.simpleicons.org/instagram/22d3ee" alt="Instagram" width={48} height={48} className="w-full h-full object-contain" />
             </div>
             <div className="integration-icon w-16 h-16 bg-gray-800 rounded-2xl p-2 flex items-center justify-center">
-              <img src="https://cdn.simpleicons.org/shopify/22d3ee" alt="Shopify" className="w-full h-full object-contain" />
+              <Image src="https://cdn.simpleicons.org/shopify/22d3ee" alt="Shopify" width={48} height={48} className="w-full h-full object-contain" />
             </div>
             <div className="integration-icon w-16 h-16 bg-gray-800 rounded-2xl p-2 flex items-center justify-center">
-              <img src="https://cdn.simpleicons.org/zapier/22d3ee" alt="Zapier" className="w-full h-full object-contain" />
+              <Image src="https://cdn.simpleicons.org/zapier/22d3ee" alt="Zapier" width={48} height={48} className="w-full h-full object-contain" />
             </div>
             <div className="integration-icon w-16 h-16 bg-gray-800 rounded-2xl p-2 flex items-center justify-center">
-              <img src="https://cdn.simpleicons.org/openai/22d3ee" alt="OpenAI" className="w-full h-full object-contain" />
+              <Image src="https://cdn.simpleicons.org/openai/22d3ee" alt="OpenAI" width={48} height={48} className="w-full h-full object-contain" />
             </div>
           </div>
         </div>
@@ -1105,7 +1092,7 @@ export default function Home() {
         >
           <div className="bg-gray-800 p-4 flex justify-between items-center border-b border-gray-700">
             <div className="flex items-center space-x-3">
-              <img src="/assets/logo.png" alt="NOMED TECH" className="h-6 w-6" />
+              <Image src="/assets/logo.png" alt="NOMED TECH" width={24} height={24} className="h-6 w-6" />
               <h3 className="font-semibold text-cyan-400">NOMED TECH AI Assistant</h3>
             </div>
             <button onClick={() => setChatOpen(false)} className="text-gray-400 hover:text-white">
